@@ -18,9 +18,8 @@ module TooDone
     option :date, :aliases => :d,
       :desc => "A Due Date in YYYY-MM-DD format."
     def add(task)
-      list = TodoList.find_or_create_by(:list options[:list], :user_id current_user.id)
-      new_task = Task.find_or_create_by(:task name, :duedate options[:duedate])
-      puts "You have added '#{new_task.task}' to the '#{list_name.list.capitalize}' list."
+      list = List.find_or_create_by(user_id: current_user.id, name: options[:list])
+      task = Task.find_or_create_by(name: task,list_id: list.id, due_date: options[:date])
     end
 
     desc "edit", "Edit a task from a todo list."
